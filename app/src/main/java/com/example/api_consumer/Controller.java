@@ -12,43 +12,30 @@ import java.net.URL;
 
 public class Controller {
 
-    public CharacterQuote getData(String end) throws Exception {
-        String json = ConexaoApi.getJsonFromApi(end);
+    public Pokemon getData(String end) throws Exception {
+        String json = Connection.getJsonFromApi(end);
 
         if(json.isEmpty()){
             throw new Exception("something went wrong");
         }
-        String jsonSemParenteses =  json.substring(1, json.length() -1);
-        return parseJson(jsonSemParenteses);
+        String data =  json.substring(1, json.length() -1);
+        return parseJson(data);
     }
 
-    private CharacterQuote parseJson(String json){
+    private Pokemon parseJson(String json){
         try {
-            CharacterQuote quote = new CharacterQuote();
+            Pokemon poke = new Pokemon();
 
             JSONObject obj = new JSONObject(json);
-            quote.setCharacter(obj.getString("character"));
-            quote.setCharacterDirection(obj.getString("characterDirection"));
-            quote.setImage(converteImagem((obj.getString("image"))));
-            quote.setQuote(obj.getString("quote"));
+            poke.setName(obj.getString("name"));
+            poke.setId(obj.getString("id"));
 
-            return quote;
+
+            return poke;
         }catch (JSONException e){
             e.printStackTrace();
         }
         return null;
     }
 
-    private Bitmap converteImagem(String url) {
-        try {
-            URL urlImagem = new URL(url);
-            InputStream inputStream = urlImagem.openStream();
-            Bitmap image = BitmapFactory.decodeStream(inputStream);
-            inputStream.close();
-            return image;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

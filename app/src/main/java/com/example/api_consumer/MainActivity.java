@@ -12,8 +12,9 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView image;
+    //private ImageView image;
     private TextView pokemon;
+    private TextView pokemonId;
     private ProgressDialog load;
 
 
@@ -23,29 +24,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.setTitle("pokemons");
-        //DownloadCharacter download = new DownloadCharacter();
+        GetPokemon download = new GetPokemon();
 
         pokemon = (TextView)findViewById(R.id.pokemonName);
-        image = (ImageView)findViewById(R.id.pokemonImage);
+        pokemonId = (TextView)findViewById(R.id.pokemonId);
+        //image = (ImageView)findViewById(R.id.pokemonImage);
 
-        //Chama Async Task
-        //download.execute();
+        download.execute();
     }
 
-    private class GetPokemon extends AsyncTask<Void, Void, CharacterQuote> {
+    private class GetPokemon extends AsyncTask<Void, Void, Pokemon> implements com.example.api_consumer.GetPokemon {
 
         @Override
         protected void onPreExecute(){
-            //inicia o dialog
             load = ProgressDialog.show(MainActivity.this,
-                    "Aguarde ...", "Obtendo Informações...");
+                    "wait", "...");
         }
 
         @Override
         protected Pokemon doInBackground(Void... params) {
-            Conversor util = new Conversor();
+            Controller util = new Controller();
             try {
-                return util.getInformacao("https://pokeapi.co/api/v2/pokemon/78");
+                return util.getData("https://pokeapi.co/api/v2/pokemon/78");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -56,8 +56,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Pokemon newPokemon){
-            pokemon.setText(newPokemon.getCharacter());
-            image.setImageBitmap(newPokemon.getImage());
+            pokemon.setText(newPokemon.getName());
+            pokemonId.setText(newPokemon.getId());
+            //image.setImageBitmap(newPokemon.getImage());
             load.dismiss();
         }
     }
