@@ -19,7 +19,7 @@ public class Controller {
             throw new Exception("something went wrong");
         }
         String data =  json.substring(1, json.length() -1);
-        return parseJson(data);
+        return parseJson(json);
     }
 
     private Pokemon parseJson(String json){

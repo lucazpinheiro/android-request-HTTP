@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         download.execute();
     }
 
-    private class GetPokemon extends AsyncTask<Void, Void, Pokemon> implements com.example.api_consumer.GetPokemon {
+    private class GetPokemon extends AsyncTask<Void, Void, Pokemon> {
 
         @Override
         protected void onPreExecute(){
