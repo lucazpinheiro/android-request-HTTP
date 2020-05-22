@@ -32,7 +32,7 @@ public class Controller {
 
 
             return poke;
-        }catch (JSONException e){
+        } catch (JSONException e){
             e.printStackTrace();
         }
         return null;
