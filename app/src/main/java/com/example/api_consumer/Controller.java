@@ -29,10 +29,25 @@ public class Controller {
             JSONObject obj = new JSONObject(json);
             poke.setName(obj.getString("name"));
             poke.setId(obj.getString("id"));
+            JSONObject sprite = obj.getJSONObject("sprites");
+            poke.setImage(imageHandler(sprite.getString("front_default")));
 
 
             return poke;
         } catch (JSONException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Bitmap imageHandler(String url) {
+        try {
+            URL urlImagem = new URL(url);
+            InputStream inputStream = urlImagem.openStream();
+            Bitmap image = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+            return image;
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

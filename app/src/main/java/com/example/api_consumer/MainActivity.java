@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    //private ImageView image;
+    private ImageView image;
     private TextView descriptionId;
     private TextView descriptionName;
     private TextView pokemon;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         pokemonId = (TextView)findViewById(R.id.pokemonId);
         descriptionId = (TextView)findViewById(R.id.descriptionIdText);
         descriptionName = (TextView)findViewById(R.id.descriptionNameText);
-        //image = (ImageView)findViewById(R.id.pokemonImage);
+        image = (ImageView)findViewById(R.id.pokemonImage);
 
         download.execute();
     }
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             pokemonId.setText(newPokemon.getId());
             descriptionId.setText("ID:");
             descriptionName.setText("NAME:");
-            //image.setImageBitmap(newPokemon.getImage());
+            image.setImageBitmap(newPokemon.getImage());
             load.dismiss();
         }
     }
